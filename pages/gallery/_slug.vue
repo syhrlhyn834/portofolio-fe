@@ -79,7 +79,7 @@ export default {
     },
     // Check if the file is a video
     isVideo() {
-      return (file) => file && file.match(/\.(mp4|webm|ogg)$/i);
+      return (file) => file && file.match(/\.(mp4|webm|ogg|mov)$/i);
     },
     // Determine the video type
     videoType() {
