@@ -44,7 +44,7 @@
 
     <div class="flex flex-col md:flex-row items-center mt-10 md:px-60" v-for="(biodata, index) in biodatas" :key="biodata.id">
       <div class="md:w-1/2 mb-4 md:mb-0">
-        <img :src="biodata.image" loading="lazy" alt="Gambar besar" class="w-96 h-96 rounded-lg object-cover image-animation lazyLoad">
+        <v-img :lazy-src="biodata.image" loading="lazy" alt="Gambar besar" class="w-96 h-96 rounded-lg object-cover image-animation lazyLoad" />
       </div>
       <div class="md:w-1/2">
         <div class="text-2xl font-bold mb-4 break-all max-w-full text-blue-500">Who am i?</div>
@@ -138,7 +138,7 @@
     <div class="mt-4 flex justify-center items-center relative group" v-for="(skill, index) in skills" :key="skill.id">
         <div class="relative inline-block group-hover:opacity-100">
             <div class="flex flex-col items-center">
-                <img :src="skill.image" loading="lazy" alt="Gambar kecil" class="w-12 h-12 transition-transform duration-300 transform hover:scale-110 lazyLoad">
+                 <v-img :lazy-src="skill.image" loading="lazy" alt="Gambar kecil" class="w-12 h-12 transition-transform duration-300 transform hover:scale-110 lazyLoad" />
                 <span class="absolute top-full left-1/2 transform -translate-x-1/2 -mt-2 text-center bg-white bg-opacity-75 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{{ skill.description }}</span>
             </div>
         </div>
