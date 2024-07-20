@@ -32,7 +32,7 @@
       </div>
       <div v-for="blog in paginatedBlogs" :key="blog.id" class="w-full sm:w-1/2 md:w-1/3 px-3 mb-3">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full">
-          <img :src="blog.image" class="w-full" alt="Blog Image">
+          <img :src="blog.image" class="w-full lazyLoad" alt="Blog Image">
           <div class="p-4">
             <div class="text-gray-500 text-sm mb-2">
               <i class="fa fa-calendar"></i> {{ blog.created_at }}

@@ -33,7 +33,7 @@
               <p class="text-xs md:text-sm"><i class="bi bi-tags-fill"></i> {{ blog.category.name }}</p>
               <p class="text-xs md:text-sm"><i class="bi bi-pencil-square"></i> {{ blog.user.name }}</p>
             </div>
-            <img :src="blog.image" alt="Blog Image" class="w-full md:w-full h-auto rounded-lg mb-6">
+            <img :src="blog.image" alt="Blog Image" class="w-full md:w-full h-auto rounded-lg mb-6 lazyLoad">
             <div class="text-lg mb-4">{{ blog.description }}</div>
             <div v-html="blog.content" class="prose"></div>
           </template>
@@ -65,7 +65,7 @@
             <hr class="my-2">
             <div v-for="blogHomepage in blogHomepages" :key="blogHomepage.id" class="border-0 shadow-sm mb-2 rounded-lg bg-white">
               <div class="p-2 flex items-start space-x-2">
-                <img :src="blogHomepage.image" alt="Gambar kecil" class="w-12 h-12 rounded-lg object-cover">
+                <img :src="blogHomepage.image" alt="Gambar kecil" class="w-12 h-12 rounded-lg object-cover lazyLoad">
                 <div>
                   <nuxt-link :to="{ name: 'blog-slug', params: { slug: blogHomepage.slug }}" class="text-gray-800 hover:underline">
                     {{ blogHomepage.title }}

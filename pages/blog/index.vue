@@ -27,7 +27,7 @@
         <div class="grid grid-cols-1 gap-8">
           <div v-for="blog in blogs" :key="blog.id" class="flex flex-col md:flex-row">
             <div class="md:w-1/3 mb-4 md:mb-0">
-              <img :src="blog.image" loading="lazy" alt="Gambar kecil" class="w-full h-auto rounded-lg max-h-40 object-cover image-animation">
+              <img :src="blog.image" loading="lazy" alt="Gambar kecil" class="w-full h-auto rounded-lg max-h-40 object-cover image-animation lazyLoad">
             </div>
             <div class="md:w-2/3 md:px-6">
               <div class="text-2xl font-bold mb-4 break-all max-w-full text-blue-500">
@@ -79,7 +79,7 @@
             <hr class="my-2">
             <div v-for="latestBlog in latestBlogs" :key="latestBlog.id" class="border-0 shadow-sm mb-2 rounded-lg bg-white">
               <div class="p-2 flex items-start space-x-2">
-                <img :src="latestBlog.image" alt="Gambar kecil" class="w-16 h-16 rounded-lg object-cover">
+                <img :src="latestBlog.image" alt="Gambar kecil" class="w-16 h-16 rounded-lg object-cover lazyLoad">
                 <div>
                   <nuxt-link :to="{ name: 'blog-slug', params: { slug: latestBlog.slug }}" class="text-gray-800 hover:underline">
                     {{ latestBlog.title }}

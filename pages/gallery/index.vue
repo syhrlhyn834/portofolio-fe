@@ -62,7 +62,7 @@
         <div class="grid gap-4" v-for="(group, index) in galleryGroups" :key="index">
           <div v-for="gallery in group" :key="gallery.id">
             <div v-if="isImage(gallery.file)">
-              <img :src="gallery.file" loading="lazy" class="h-auto max-w-full rounded-lg" :alt="gallery.title">
+              <img :src="gallery.file" loading="lazy" class="h-auto max-w-full rounded-lg lazyLoad" :alt="gallery.title">
               <p class="font-bold text-lg md:text-xl">
                 <nuxt-link :to="{name: 'gallery-slug', params: {slug: gallery.slug}}">
                   {{ gallery.title.substr(0, 50) }}...
@@ -72,7 +72,7 @@
               <p class="text-xs md:text-sm">{{gallery.description.substr(0, 50)}}...</p>
             </div>
             <div v-else-if="isVideo(gallery.file)">
-              <video controls class="h-auto max-w-full rounded-lg">
+              <video controls class="h-auto max-w-full rounded-lg lazyLoad">
                 <source :src="gallery.file" type="video/mp4">
                 Your browser does not support the video tag.
               </video>

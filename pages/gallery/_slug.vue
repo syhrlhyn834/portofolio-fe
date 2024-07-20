@@ -31,10 +31,10 @@
         <!-- Media Handling -->
         <div class="w-full rounded-t-lg md:w-96 md:rounded-none md:rounded-s-lg overflow-hidden">
           <template v-if="isImage(galleries.file)">
-            <img class="object-cover w-full h-[500px] md:h-auto" :src="galleries.file" :alt="galleries.title">
+            <img class="object-cover w-full h-[500px] md:h-auto lazyLoad" :src="galleries.file" :alt="galleries.title">
           </template>
           <template v-else-if="isVideo(galleries.file)">
-            <video class="object-cover w-full h-[500px] md:h-auto" controls>
+            <video class="object-cover w-full h-[500px] md:h-auto lazyLoad" controls>
               <source :src="galleries.file" :type="videoType">
               Your browser does not support the video tag.
             </video>
