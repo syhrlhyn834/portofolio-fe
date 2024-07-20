@@ -99,7 +99,7 @@ export default {
 
     ],
     axios: {
-        baseURL: 'https://arlchoose.id'
+        baseURL: 'https://api.arlchoose.id'
     },
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
