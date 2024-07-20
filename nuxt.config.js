@@ -94,10 +94,16 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/auth-next',
         'nuxt-multiselect',
-        //https://github.com/avil13/vue-sweetalert2
         'vue-sweetalert2/nuxt',
-
+        'nuxt-lazy-load'
     ],
+    lazyLoad: {
+        // These are the default options
+        directiveOnly: false,
+        loadingClass: 'isLoading',
+        loadedClass: 'isLoaded',
+        appendClass: 'lazyLoad'
+    },
     axios: {
         baseURL: 'https://api.arlchoose.id'
     },
