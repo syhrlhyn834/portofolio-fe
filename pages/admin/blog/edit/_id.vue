@@ -96,7 +96,7 @@ export default {
       editorConfig: {
         removePlugins: ['Title'],
         simpleUpload: {
-          uploadUrl: 'http://localhost/portofolio-app/public/api/web/blogs/storeImage'
+          uploadUrl: 'https://api.arlchoose.id/api/web/blogs/storeImage'
         }
       }
     }

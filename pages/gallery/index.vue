@@ -125,7 +125,7 @@ export default {
       return /\.(jpg|jpeg|png|gif)$/i.test(file);
     },
     isVideo(file) {
-      return /\.(mp4|webm|ogg)$/i.test(file);
+      return /\.(mp4|webm|ogg|mov)$/i.test(file);
     },
     async fetchGalleries(page = 1) {
       try {
