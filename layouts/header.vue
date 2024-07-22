@@ -1,7 +1,5 @@
 <template>
   <div>
-    <img :src="image" alt="Header Image" v-if="image"/>
-    <nuxt />
   </div>
 </template>
 
