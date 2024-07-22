@@ -34,7 +34,7 @@
               <p class="text-xs md:text-sm"><i class="bi bi-pencil-square"></i> {{ blog.user.name }}</p>
             </div>
             <img :src="blog.image" alt="Blog Image" class="w-full md:w-full h-auto rounded-lg mb-6 lazyLoad">
-            <div class="text-lg mb-4">{{ blog.description }}</div>
+            <div class="mb-4">{{ blog.description }}</div>
             <div v-html="blog.content" class="prose"></div>
           </template>
           <template v-else>
