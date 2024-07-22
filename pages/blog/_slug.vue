@@ -83,6 +83,7 @@
 
 <script>
 export default {
+  layout: 'header',
   async asyncData({ params, $axios }) {
   try {
     const [blogResponse, categoriesResponse, blogHomepagesResponse] = await Promise.all([
