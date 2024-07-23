@@ -28,51 +28,72 @@
     <!-- Media Card -->
     <div class="flex justify-center">
       <div class="mx-6 flex flex-col items-stretch bg-white border border-gray-200 rounded-lg shadow-lg md:flex-row md:max-w-5xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-        <!-- Media Handling -->
         <div class="w-full rounded-t-lg md:w-96 md:rounded-none md:rounded-s-lg overflow-hidden">
-          <template v-if="isImage(galleries.file)">
-            <img class="object-cover w-full h-[500px] md:h-auto lazyLoad" :src="galleries.file" :alt="galleries.title">
-          </template>
-          <template v-else-if="isVideo(galleries.file)">
-            <video class="object-cover w-full h-[500px] md:h-auto lazyLoad" controls>
-              <source :src="galleries.file" :type="videoType">
-              Your browser does not support the video tag.
-            </video>
-          </template>
+          <div v-if="loading">
+            <SkeletonLoader />
+          </div>
+          <div v-else>
+            <template v-if="isImage(galleries.file)">
+              <img class="object-cover w-full h-[500px] md:h-auto lazyLoad" :src="galleries.file" :alt="galleries.title">
+            </template>
+            <template v-else-if="isVideo(galleries.file)">
+              <video class="object-cover w-full h-[500px] md:h-auto lazyLoad" controls>
+                <source :src="galleries.file" :type="videoType">
+                Your browser does not support the video tag.
+              </video>
+            </template>
+          </div>
         </div>
         <div class="flex flex-col justify-between p-8 leading-normal md:flex-1">
-          <h5 class="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-left">{{ galleries.title }} {{ galleries.description }}</h5>
-          <p class="mb-4 font-normal text-gray-700 dark:text-gray-400 text-left" v-html="galleries.content"></p>
-          <div class="mt-auto w-full text-left">
-            <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">Kategori:</p>
-            <p class="mt-2 p-4 font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-xl shadow-lg dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600">
-              {{ galleries.category.name }}
-            </p>
+          <div v-if="loading">
+            <SkeletonLoader />
           </div>
-
+          <div v-else>
+            <h5 class="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white text-left">{{ galleries.title }} {{ galleries.description }}</h5>
+            <p class="mb-4 font-normal text-gray-700 dark:text-gray-400 text-left" v-html="galleries.content"></p>
+            <div class="mt-auto w-full text-left">
+              <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">Kategori:</p>
+              <p class="mt-2 p-4 font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-xl shadow-lg dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600">
+                {{ galleries.category.name }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
 <script>
+import SkeletonLoader from '@/components/SkeletonLoader.vue';
+
 export default {
-   layout: 'header',
+  components: {
+    SkeletonLoader,
+  },
+  layout: 'header',
+  data() {
+    return {
+      loading: true, // Menambahkan properti loading
+      galleries: {},
+    };
+  },
   async asyncData({ params, $axios }) {
     try {
       const galleryResponse = await $axios.$get(`/api/web/galleries/${params.slug}`);
       return {
-        galleries: galleryResponse.data
+        galleries: galleryResponse.data,
+        loading: false, // Set loading to false after data is loaded
       };
     } catch (error) {
       console.error('Error fetching data:', error);
       return {
-        galleries: null
+        galleries: null,
+        loading: false, // Set loading to false if there's an error
       };
     }
   },
-
   computed: {
     // Check if the file is an image
     isImage() {
@@ -87,7 +108,6 @@ export default {
       return this.galleries.file ? (this.galleries.file.endsWith('.webm') ? 'video/webm' : 'video/mp4') : '';
     }
   },
-
   head() {
     if (this.galleries) {
       return {

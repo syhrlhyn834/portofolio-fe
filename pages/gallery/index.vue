@@ -61,27 +61,31 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="grid gap-4" v-for="(group, index) in galleryGroups" :key="index">
           <div v-for="gallery in group" :key="gallery.id">
-            <div v-if="isImage(gallery.file)">
-              <img :src="gallery.file" loading="lazy" class="h-auto max-w-full rounded-lg lazyLoad" :alt="gallery.title">
-              <p class="font-bold text-lg md:text-xl">
-                <nuxt-link :to="{name: 'gallery-slug', params: {slug: gallery.slug}}">
-                  {{ gallery.title.substr(0, 50) }}...
-                </nuxt-link>
-              </p>
-
-              <p class="text-xs md:text-sm">{{gallery.description.substr(0, 50)}}...</p>
+            <div v-if="loading">
+              <SkeletonLoader />
             </div>
-            <div v-else-if="isVideo(gallery.file)">
-              <video controls class="h-auto max-w-full rounded-lg lazyLoad">
-                <source :src="gallery.file" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-              <p class="font-bold text-lg md:text-xl">
-                <nuxt-link :to="{name: 'gallery-slug', params: {slug: gallery.slug}}">
-                  {{ gallery.title.substr(0, 50) }}...
-                </nuxt-link>
-              </p>
-              <p class="text-xs md:text-sm">{{gallery.description.substr(0, 50)}}</p>
+            <div v-else>
+              <div v-if="isImage(gallery.file)">
+                <img :src="gallery.file" loading="lazy" class="h-auto max-w-full rounded-lg lazyLoad" :alt="gallery.title">
+                <p class="font-bold text-lg md:text-xl">
+                  <nuxt-link :to="{name: 'gallery-slug', params: {slug: gallery.slug}}">
+                    {{ gallery.title.substr(0, 50) }}...
+                  </nuxt-link>
+                </p>
+                <p class="text-xs md:text-sm">{{gallery.description.substr(0, 50)}}...</p>
+              </div>
+              <div v-else-if="isVideo(gallery.file)">
+                <video controls class="h-auto max-w-full rounded-lg lazyLoad">
+                  <source :src="gallery.file" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="font-bold text-lg md:text-xl">
+                  <nuxt-link :to="{name: 'gallery-slug', params: {slug: gallery.slug}}">
+                    {{ gallery.title.substr(0, 50) }}...
+                  </nuxt-link>
+                </p>
+                <p class="text-xs md:text-sm">{{gallery.description.substr(0, 50)}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -93,7 +97,12 @@
 
 <script>
 import Title from '@/components/title.vue';
+import SkeletonLoader from '@/components/SkeletonLoader.vue';
+
 export default {
+  components: {
+    SkeletonLoader,
+  },
   data() {
     return {
       galleries: [],
@@ -101,7 +110,8 @@ export default {
       currentPage: 1,
       pagination: {},
       selectedTab: 'photos',
-      selectedCategory: ''
+      selectedCategory: '',
+      loading: true, // Menambahkan properti loading
     };
   },
   computed: {
@@ -128,14 +138,17 @@ export default {
       return /\.(mp4|webm|ogg|mov)$/i.test(file);
     },
     async fetchGalleries(page = 1) {
+      this.loading = true; // Set loading to true
       try {
         const response = await this.$axios.get(`/api/web/galleries?page=${page}`);
         this.galleries = response.data.data.data;
         this.pagination = response.data.data;
         this.currentPage = page;
+        this.loading = false; // Set loading to false after data is loaded
         window.scrollTo(0, 0);  // Scroll to the top of the page
       } catch (error) {
         console.error('Error fetching galleries:', error);
+        this.loading = false; // Set loading to false if there's an error
       }
     },
     async fetchCategories() {
@@ -166,7 +179,8 @@ export default {
       galleries,
       categories: filteredCategories,
       pagination,
-      currentPage: page
+      currentPage: page,
+      loading: false, // Initialize loading to false in asyncData
     };
   }
 };
